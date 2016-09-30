@@ -1,9 +1,7 @@
 'use strict';
 const appRoot = require('app-root-path')
-const NodeESModuleLoader = require('node-es-module-loader')
-const loader = new NodeESModuleLoader()
 
-const pluginName = 'plugin-node-tab'
+const pluginName = 'plugin-node-engine-extender'
 const configPath = 'extensionPath'
 
 const applyHelpers = (engine, extensions) => {
@@ -16,13 +14,11 @@ const applyHelpers = (engine, extensions) => {
 }
 
 const loadExtensions = (extPath) => {
-  let extension
-  try {
-    extension = Promise.resolve(require(`${appRoot}/${extPath}`))
-  } catch (e) {
-    extension = loader.import(`${appRoot}/${extPath}`).then((module) => module.default)
+  const extension = require(`${appRoot}/${extPath}`))
+  if (!extension) {
+    console.log('Extension failed to load')
+    process.exit(1)
   }
-
   return extension
 }
 
@@ -32,17 +28,13 @@ function onPatternIterate(patternlab) {
     console.log(`no extension path at config.${configPath}`)
     process.exit(1)
   }
-  const getExtensions = loadExtensions(extPath).catch((err) => {
-    console.log(`extensions not found at ${extPath}`)
-    console.log('ERROR:', err)
+  const extenstions = loadExtensions(extPath)
+
+  patternlab.patterns = patternlab.patterns.map((pattern) => {
+    pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions)
+    return pattern;
   })
-  return getExtensions.then((extensions) => {
-    patternlab.patterns = patternlab.patterns.map((pattern) => {
-      pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions)
-      return pattern;
-    })
-    return patternlab
-  })
+  return patternlab
 }
 
 function registerEvents(patternlab) {
