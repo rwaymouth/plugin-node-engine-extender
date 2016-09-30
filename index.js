@@ -38,7 +38,7 @@ function onPatternIterate(patternlab) {
   })
   return getExtensions.then((extensions) => {
     patternlab.patterns = patternlab.patterns.map((pattern) => {
-      pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions.default)
+      pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions)
       return pattern;
     })
     return patternlab
