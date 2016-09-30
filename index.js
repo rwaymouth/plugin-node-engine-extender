@@ -14,7 +14,7 @@ const applyHelpers = (engine, extensions) => {
 }
 
 const loadExtensions = (extPath) => {
-  const extension = require(`${appRoot}/${extPath}`))
+  const extension = require(`${appRoot}/${extPath}`)
   if (!extension) {
     console.log('Extension failed to load')
     process.exit(1)
