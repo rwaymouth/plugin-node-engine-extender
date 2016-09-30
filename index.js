@@ -28,7 +28,7 @@ function onPatternIterate(patternlab) {
     console.log(`no extension path at config.${configPath}`)
     process.exit(1)
   }
-  const extenstions = loadExtensions(extPath)
+  const extensions = loadExtensions(extPath)
 
   patternlab.patterns = patternlab.patterns.map((pattern) => {
     pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions)
