@@ -1,17 +1,7 @@
 'use strict';
 const appRoot = require('app-root-path')
-
 const pluginName = 'plugin-node-engine-extender'
 const configPath = 'extensionPath'
-
-const applyHelpers = (engine, extensions) => {
-  for (let key in extensions) {
-    if (extensions[key]) {
-      engine.registerHelper(key, extensions[key])
-    }
-  }
-  return engine
-}
 
 const loadExtensions = (extPath) => {
   const extension = require(`${appRoot}/${extPath}`)
@@ -23,15 +13,9 @@ const loadExtensions = (extPath) => {
 }
 
 function onPatternIterate(patternlab) {
-  const extPath = patternlab.config[configPath]
-  if (!extPath) {
-    console.log(`no extension path at config.${configPath}`)
-    process.exit(1)
-  }
-  const extensions = loadExtensions(extPath)
-
+  const extension = patternlab.extension
   patternlab.patterns = patternlab.patterns.map((pattern) => {
-    pattern.engine.engine = applyHelpers(pattern.engine.engine, extensions)
+    pattern.engine.engine = extension(pattern.engine.engine)
     return pattern;
   })
   return patternlab
@@ -61,6 +45,11 @@ function pluginInit(patternlab) {
     console.error('patternlab object not provided to plugin-init')
     process.exit(1)
   }
+  const extPath = patternlab.config[configPath]
+  if (!extPath) {
+    console.log(`no extension path at config.${configPath}`)
+    process.exit(1)
+  }
   var pluginConfig = getPluginFrontendConfig()
 
   //add the plugin config to the patternlab-object
@@ -74,7 +63,7 @@ function pluginInit(patternlab) {
 
     //register events
     registerEvents(patternlab);
-
+    patternlab.extension = loadExtensions(extPath)
     //set the plugin key to true to indicate it is installed and ready
     patternlab.config[pluginName] = true;
   }
