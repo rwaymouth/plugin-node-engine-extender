@@ -14,8 +14,32 @@ Or add it directly to your project's `package.json` file and run `npm install`
 
 The plugin expects a config file to be available to import from a path specified in the patternlab config like this:
 
+config
 ```json
  {
-   "extensionPath": "ROOT_PATH/to/your/extensions",
+   "extensionPath": "ROOT_PATH/to/your/extensions.js",
  }
+```
+
+extensions.js
+```js
+const helpers = {
+  join: function (arr, seperator = ',') {
+    if (arr && arr.length > 0) {
+      return arr.join(seperator)
+    }
+  }
+}
+
+// Takes a Pattern Engine as an argument, modifies, and returns it.
+const applyHelpers = (engine) => {
+  for (let key in helpers) {
+    if (helpers[key]) {
+      engine.registerHelper(key, helpers[key])
+    }
+  }
+  return engine
+}
+
+module.exports = applyHelpers
 ```
