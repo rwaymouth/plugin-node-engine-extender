@@ -1,12 +1,12 @@
 # Pattern Engine Extender for Pattern Lab Node
 
-The Pattern Engine Extender allows Pattern Lab Node users to extend the pattern engine. Currently it is only configured to apply handlebars helpers, but that may change in the future.
+The Pattern Engine Extender allows Pattern Lab Node users to extend the pattern engine. 
 
 ## Installation
 
 To add the plugin to your project using npm type:
 
-  npm install plugin-node-tab --save
+  npm install plugin-node-engine-extender --save
 
 Or add it directly to your project's `package.json` file and run `npm install`
 

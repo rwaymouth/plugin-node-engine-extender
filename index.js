@@ -59,15 +59,16 @@ function pluginInit(patternlab) {
   patternlab.plugins.push(pluginConfig)
 
   //setup listeners if not already active
-  if (patternlab.config[pluginName] !== undefined && !patternlab.config[pluginName]) {
+  if (patternlab.config.plugins[pluginName] !== undefined &&
+      patternlab.config.plugins[pluginName].enabled &&
+      !patternlab.config.plugins[pluginName].initialized) {
 
-    //register events
-    registerEvents(patternlab);
-    patternlab.extension = loadExtensions(extPath)
-    //set the plugin key to true to indicate it is installed and ready
-    patternlab.config[pluginName] = true;
-  }
+     //register events
+     registerEvents(patternlab);
 
+     //set the plugin initialized flag to true to indicate it is installed and ready
+     patternlab.config.plugins[pluginName].initialized = true;
+   }
 }
 
 module.exports = pluginInit
