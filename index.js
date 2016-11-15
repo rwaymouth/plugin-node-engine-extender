@@ -65,6 +65,7 @@ function pluginInit(patternlab) {
 
      //register events
      registerEvents(patternlab);
+     patternlab.extension = loadExtensions(extPath)
 
      //set the plugin initialized flag to true to indicate it is installed and ready
      patternlab.config.plugins[pluginName].initialized = true;
