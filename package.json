@@ -1,6 +1,6 @@
 {
   "name": "plugin-node-engine-extender",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Pattern Lab Node Plugin for extending the pattern engine",
   "main": "index.js",
   "scripts": {
