@@ -4,11 +4,17 @@ const pluginName = 'plugin-node-engine-extender'
 const configPath = 'extensionPath'
 
 const loadExtensions = (extPath) => {
-  const extension = require(`${appRoot}/${extPath}`)
+  let extension = require(`${appRoot}/${extPath}`)
+
   if (!extension) {
     console.log('Extension failed to load')
     process.exit(1)
   }
+
+  if (extension.default) {
+    extension = extension.default
+  } 
+
   return extension
 }
 
