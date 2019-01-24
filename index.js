@@ -39,6 +39,11 @@ function registerEvents(patternlab) {
 function getPluginFrontendConfig() {
   return {
     'name':'pattern-lab\/' + pluginName,
+    'templates': [],
+    'stylesheets': [],
+    'javascripts': [],
+    'onready': '',
+    'callback': ''
   }
 }
 
