@@ -1,5 +1,5 @@
 'use strict';
-const appRoot = require('app-root-path')
+const appRoot = process.env.PWD || process.cwd();
 const pluginName = 'plugin-node-engine-extender'
 const configPath = 'extensionPath'
 
